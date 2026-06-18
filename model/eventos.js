@@ -6,8 +6,8 @@ const eventosSchema = new Schema({
   palestrante: { type: Number, required: true },
   data: { type: Date, default: Date.now },
   tema: { type: String, required: true },
-  tema: { type: Number, required: true },
-  tema: { type: Number, required: true }
+  bloco: { type: Number, required: true },
+  vaga: { type: Number, required: true }
 })
 
 module.exports = mongoose.model('Eventos', eventosSchema);

@@ -14,14 +14,14 @@ exports.listarEventos = async (req, res) => {
 // FALTA CONFIGURAR!
 
 exports.adicionarProduto = async (req, res) => {
-  const novoProduto = req.body;
+  const novoEvento = req.body;
 
-  if (!novoProduto.nome || !novoProduto.preco) {
-    res.send('[ERRO]: Informar nome e preço!');
+  if (!novoEvento.nome || !novoEvento.palestrante) {
+    res.send('[ERRO]: Informar nome e palestrante!');
   } else {
     try {
-      const produto = await Produtos.create(novoProduto);
-      res.send({ msg: '[SUCESSO]: produto cadastrado!', detalhes: produto });
+      const evento = await Eventos.create(novoEvento);
+      res.send({ msg: '[SUCESSO]: evento cadastrado!', detalhes: evento });
     } catch (erro) {
       console.log(erro);
       res.send({ msg: '[ERRO]: no cadastro de produto', detalhes: erro });
