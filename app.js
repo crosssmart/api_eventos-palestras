@@ -31,6 +31,7 @@ const auth = require('./middlewares/auth.js');
 //Usuario
 api.post('/usuario', usuarioController.registrarUsuario);
 api.get('/usuarios', usuarioController.listarUsuarios);
+// falta edit e delete
 
 api.post('/logar', auth.logar);
 
@@ -39,7 +40,6 @@ api.get('/eventos', auth.autenticar, eventoController.listarEventos);
 api.post('/evento', auth.autenticar, eventoController.adicionarEvento);
 api.put('/evento', auth.autenticar, eventoController.editarEvento);
 api.delete('/evento', auth.autenticar, eventoController.removerEvento);
-
 
 
 api.listen(porta, () => {
