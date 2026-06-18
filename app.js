@@ -28,18 +28,16 @@ const eventoController = require('./controller/evento.js');
 const usuarioController = require('./controller/usuario.js');
 const auth = require('./middlewares/auth.js');
 
+//Usuario
 api.post('/usuario', usuarioController.registrarUsuario);
+api.get('/usuarios', usuarioController.listarUsuarios);
+
 api.post('/logar', auth.logar);
 
-
-// TROCAR ISSO AQUI
-//Mostrar
+//Eventos
 api.get('/eventos', auth.autenticar, eventoController.listarEventos);
-//Adicionar
 api.post('/evento', auth.autenticar, eventoController.adicionarEvento);
-//Editar
 api.put('/evento', auth.autenticar, eventoController.editarEvento);
-//Remover
 api.delete('/evento', auth.autenticar, eventoController.removerEvento);
 
 

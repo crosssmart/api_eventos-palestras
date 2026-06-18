@@ -8,7 +8,6 @@ exports.listarUsuarios = async (req, res) => {
   } catch (erro) {
     console.log(erro);
     console.log("[ERRO] Deu erro na API!");
-
   }
 }
 
@@ -47,3 +46,5 @@ exports.registrarUsuario = async (req, res) => {
     res.send({ msg: '[ERRO]: Erro ao cadastrar usuario', detalhes: erro });
   }
 }
+
+// Falta edit e remover
