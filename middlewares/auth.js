@@ -6,27 +6,19 @@ const chavePrivada = process.env.CHAVE_JWT || '';
 
 
 exports.autenticar = (req, res, next) => {
-  //recebo o token e verifico se é válido
-  //se for válido chamo o next()
-  //senão devolvo resposta com erro de permissão
-  //res.send("Sem permissão!");
-const token = req.headers['authorization'].replace('Bearer ', '');
+  const token = req.headers['authorization'].replace('Bearer ', '');
 
-if(!token)
-  return res.send('[ERRO]: Enviar token JWT!');
+  if (!token)
+    return res.send('[ERRO]: Enviar token JWT!');
 
-jwt.verify(token, chavePrivada, (erro, informacoesUsuario) => {
-  if(erro)
-    return res.send('[ERRO]: Token invalido ou expirado!');
-  //caso queira info do usuario só pegar no informacoesUsuario
-  next();
-})
+  jwt.verify(token, chavePrivada, (erro, informacoesUsuario) => {
+    if (erro)
+      return res.send('[ERRO]: Token invalido ou expirado!');
+    next();
+  })
 }
 
 exports.logar = async (req, res) => {
-  //const email = req.body.email;
-  //const senha = req.body.senha;
-  // OU
   const { email, senha } = req.body;
 
   if (!email || !senha)
@@ -40,7 +32,7 @@ exports.logar = async (req, res) => {
   if (senhaCorreta) {
     delete usuarioBD.senha;
     jwt.sign(usuarioBD.toJSON(), chavePrivada, { expiresIn: '1d' }, (erro, token) => {
-      if(erro)
+      if (erro)
         return res.send('[ERRO]: geração JWT!');
       res.send({ token: token });
     })
