@@ -11,8 +11,6 @@ exports.listarEventos = async (req, res) => {
   }
 }
 
-  
-
 exports.adicionarEvento = async (req, res) => {
   const novoEvento = req.body;
 
