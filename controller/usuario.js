@@ -12,8 +12,6 @@ exports.listarUsuarios = async (req, res) => {
   }
 }
 
-
-
 exports.registrarUsuario = async (req, res) => {
   const nome = req.body.nome;
   const cpf = req.body.cpf;
