@@ -11,65 +11,65 @@ exports.listarEventos = async (req, res) => {
   }
 }
 
-// FALTA CONFIGURAR!
+  
 
-exports.adicionarProduto = async (req, res) => {
+exports.adicionarEvento = async (req, res) => {
   const novoEvento = req.body;
 
-  if (!novoEvento.nome || !novoEvento.palestrante) {
-    res.send('[ERRO]: Informar nome e palestrante!');
+  if (!novoEvento.nome || !novoEvento.id) {
+    res.send('[ERRO]: Informar nome e ID!');
   } else {
     try {
       const evento = await Eventos.create(novoEvento);
       res.send({ msg: '[SUCESSO]: evento cadastrado!', detalhes: evento });
     } catch (erro) {
       console.log(erro);
-      res.send({ msg: '[ERRO]: no cadastro de produto', detalhes: erro });
+      res.send({ msg: '[ERRO]: no cadastro de evento', detalhes: erro });
     }
   }
 }
 
-exports.removerProduto = async (req, res) => {
-  const produto = req.body;
-  if (!produto.nome) {
+exports.removerEvento = async (req, res) => {
+  const evento = req.body;
+  if (!evento.nome) {
     return res.send({ msg: '[ERRO]: informar nome!' });
   }
 
   try {
-    const produtoRemovido = await Produtos.findOneAndDelete({ nome: produto.nome });
+    const eventoRemovido = await Eventos.findOneAndDelete({ nome: evento.nome });
 
-    if (produtoRemovido == null) {
-      res.send({ msg: '[AVISO]: Produto não existe no BD!' });
+    if (eventoRemovido == null) {
+      res.send({ msg: '[AVISO]: Evento não existe no BD!' });
     } else {
-      res.send({ msg: '[SUCESSO]: Produto removido do BD!' });
+      res.send({ msg: '[SUCESSO]: Evento removido do BD!' });
     }
 
   } catch (erro) {
     console.log(erro);
-    res.send({ msg: '[ERRO]: Remover produto!', detalhes: erro });
+    res.send({ msg: '[ERRO]: Remover evento!', detalhes: erro });
   }
 }
 
-exports.editarProduto = async (req, res) => {
-  const produto = req.body;
-  if (!produto.nome || !produto.preco) {
-    return res.send({ msg: '[ERRO]: informar nome e preço!' });
+exports.editarEvento = async (req, res) => {
+  const evento = req.body;
+  if (!evento.nome || !evento.id) {
+    return res.send({ msg: '[ERRO]: informar nome e ID!' });
   }
 
   try {
-    const produtoEditado = await Produtos.findOneAndUpdate(
-      { nome: produto.nome },
-      { preco: produto.preco }
+    const eventoEditado = await Eventos.findOneAndUpdate(
+      { nome: evento.nome },
+      { id: evento.id }
     );
 
-    if (produtoEditado == null) {
-      res.send({ msg: '[AVISO]: Produto não existe no BD!' });
+    if (eventoEditado == null) {
+      res.send({ msg: '[AVISO]: Evento não existe no BD!' });
     } else {
-      res.send({ msg: '[SUCESSO]: Produto editado do BD!' });
+      res.send({ msg: '[SUCESSO]: Evento editado do BD!' });
     }
 
   } catch (erro) {
     console.log(erro);
-    res.send({ msg: '[ERRO]: Remover produto!', detalhes: erro });
+    res.send({ msg: '[ERRO]: Editar evento!', detalhes: erro });
   }
 }

@@ -7,7 +7,8 @@ const eventosSchema = new Schema({
   data: { type: Date, default: Date.now },
   tema: { type: String, required: true },
   bloco: { type: Number, required: true },
-  vaga: { type: Number, required: true }
+  vaga: { type: Number, required: true },
+  id: { type: Number, required: true, unique: true }
 })
 
 module.exports = mongoose.model('Eventos', eventosSchema);
