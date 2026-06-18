@@ -34,13 +34,13 @@ api.post('/logar', auth.logar);
 
 // TROCAR ISSO AQUI
 //Mostrar
-api.get('/Eventos', auth.autenticar, eventoController.listarEventos);
+api.get('/eventos', auth.autenticar, eventoController.listarEventos);
 //Adicionar
-api.post('/Evento', auth.autenticar, eventoController.adicionarEvento);
+api.post('/evento', auth.autenticar, eventoController.adicionarEvento);
 //Editar
-api.put('/Evento', auth.autenticar, eventoController.editarEvento);
+api.put('/evento', auth.autenticar, eventoController.editarEvento);
 //Remover
-api.delete('/Evento', auth.autenticar, eventoController.removerEvento);
+api.delete('/evento', auth.autenticar, eventoController.removerEvento);
 
 
 
