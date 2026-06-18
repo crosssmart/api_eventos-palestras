@@ -1,4 +1,4 @@
-const Produtos = require('../model/usuario.js');
+const Usuario = require('../model/usuario.js');
 const bcrypt = require('bcrypt');
 
 exports.registrarUsuario = async (req, res) => {
