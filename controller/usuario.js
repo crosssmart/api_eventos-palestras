@@ -1,6 +1,19 @@
 const Usuario = require('../model/usuario.js');
 const bcrypt = require('bcrypt');
 
+exports.listarUsuarios = async (req, res) => {
+  try {
+    const usuarios = await Usuario.find({});
+    res.send(usuarios);
+  } catch (erro) {
+    console.log(erro);
+    console.log("[ERRO] Deu erro na API!");
+
+  }
+}
+
+
+
 exports.registrarUsuario = async (req, res) => {
   const nome = req.body.nome;
   const cpf = req.body.cpf;
