@@ -47,52 +47,26 @@ exports.registrarUsuario = async (req, res) => {
   }
 }
 
-// Falta edit e remover;~conferir com o rogerio NAO ESQUECER 
-
 exports.editarUsuario = async (req, res) => {
-  const id = req.params.id;
-
-  const nome = req.body.nome;
-  const cpf = req.body.cpf;
-  const email = req.body.email;
-  const senha = req.body.senha;
-  const pronomes = req.body.pronomes;
-
-  if (!id) {
-    return res.send({ msg: "[ERRO]: Informe o ID do usuário!" });
+  const usuario = req.body;
+  if (!usuario.cpf) {
+    return res.send({ msg: "[ERRO]: Informe o CPF do usuário!" });
   }
 
   try {
+    const usuarioEditado = await Usuario.findOneAndUpdate(
+      { cpf: usuario.cpf },
+      {
+        nome: usuario.nome, email: usuario.email, senha: await bcrypt.hash(usuario.senha, 10),
+        pronomes: usuario.pronomes
+      }
+    );
 
-    const usuario = await Usuario.findById(id);
-
-    if (!usuario) {
-      return res.send({ msg: "[ERRO]: Usuário não encontrado!" });
+    if (usuarioEditado == null) {
+      res.send({ msg: '[AVISO]: Usuario não existe no BD!' });
+    } else {
+      res.send({ msg: '[SUCESSO]: Usuario editado do BD!' });
     }
-
-    if (nome) {
-      usuario.nome = nome;
-    }
-
-    if (cpf) {
-      usuario.cpf = cpf;
-    }
-
-    if (email) {
-      usuario.email = email;
-    }
-
-    if (pronomes) {
-      usuario.pronomes = pronomes;
-    }
-
-    if (senha) {
-      usuario.senha = await bcrypt.hash(senha, 10);
-    }
-
-    await usuario.save();
-
-    res.send("[SUCESSO]: Usuário atualizado com sucesso!");
 
   } catch (erro) {
     console.log(erro);
@@ -100,26 +74,20 @@ exports.editarUsuario = async (req, res) => {
   }
 }
 
-
 exports.deletarUsuario = async (req, res) => {
-
-  const id = req.params.id;
-
-  if (!id) {
-    return res.send({ msg: "[ERRO]: Informe o ID do usuário!" });
+  const usuario = req.body;
+  if (!usuario.cpf) {
+    return res.send({ msg: "[ERRO]: Informe o CPF do usuário!" });
   }
 
   try {
+    const usuarioRemovido = await Usuario.findOneAndDelete({ cpf: usuario.cpf });
 
-    const usuario = await Usuario.findById(id);
-
-    if (!usuario) {
-      return res.send({ msg: "[ERRO]: Usuário não encontrado!" });
+    if (usuarioRemovido == null) {
+      res.send({ msg: '[AVISO]: Usuario não existe no BD!' });
+    } else {
+      res.send({ msg: '[SUCESSO]: Usuario removido do BD!' });
     }
-
-    await usuario.deleteOne();
-
-    res.send("[SUCESSO]: Usuário removido com sucesso!");
 
   } catch (erro) {
     console.log(erro);

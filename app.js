@@ -29,11 +29,12 @@ const usuarioController = require('./controller/usuario.js');
 const auth = require('./middlewares/auth.js');
 
 //Usuario
+api.get('/usuarios', auth.autenticar, usuarioController.listarUsuarios);
 api.post('/usuario', usuarioController.registrarUsuario);
-api.get('/usuarios', usuarioController.listarUsuarios);
-api.put('/usuario/:id', usuarioController.editarUsuario);
-api.delete('/usuario/:id', usuarioController.deletarUsuario);
+api.put('/usuario', auth.autenticar, usuarioController.editarUsuario);
+api.delete('/usuario', auth.autenticar, usuarioController.deletarUsuario);
 
+//Pra pegar o token
 api.post('/logar', auth.logar);
 
 //Eventos
