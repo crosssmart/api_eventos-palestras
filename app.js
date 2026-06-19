@@ -31,7 +31,8 @@ const auth = require('./middlewares/auth.js');
 //Usuario
 api.post('/usuario', usuarioController.registrarUsuario);
 api.get('/usuarios', usuarioController.listarUsuarios);
-// falta edit e delete
+api.put('/usuario/:id', usuarioController.editarUsuario);
+api.delete('/usuario/:id', usuarioController.deletarUsuario);
 
 api.post('/logar', auth.logar);
 

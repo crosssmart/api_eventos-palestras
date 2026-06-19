@@ -47,4 +47,82 @@ exports.registrarUsuario = async (req, res) => {
   }
 }
 
-// Falta edit e remover
+// Falta edit e remover;~conferir com o rogerio NAO ESQUECER 
+
+exports.editarUsuario = async (req, res) => {
+  const id = req.params.id;
+
+  const nome = req.body.nome;
+  const cpf = req.body.cpf;
+  const email = req.body.email;
+  const senha = req.body.senha;
+  const pronomes = req.body.pronomes;
+
+  if (!id) {
+    return res.send({ msg: "[ERRO]: Informe o ID do usuário!" });
+  }
+
+  try {
+
+    const usuario = await Usuario.findById(id);
+
+    if (!usuario) {
+      return res.send({ msg: "[ERRO]: Usuário não encontrado!" });
+    }
+
+    if (nome) {
+      usuario.nome = nome;
+    }
+
+    if (cpf) {
+      usuario.cpf = cpf;
+    }
+
+    if (email) {
+      usuario.email = email;
+    }
+
+    if (pronomes) {
+      usuario.pronomes = pronomes;
+    }
+
+    if (senha) {
+      usuario.senha = await bcrypt.hash(senha, 10);
+    }
+
+    await usuario.save();
+
+    res.send("[SUCESSO]: Usuário atualizado com sucesso!");
+
+  } catch (erro) {
+    console.log(erro);
+    res.send({ msg: "[ERRO]: Erro ao atualizar usuário!" });
+  }
+}
+
+
+exports.deletarUsuario = async (req, res) => {
+
+  const id = req.params.id;
+
+  if (!id) {
+    return res.send({ msg: "[ERRO]: Informe o ID do usuário!" });
+  }
+
+  try {
+
+    const usuario = await Usuario.findById(id);
+
+    if (!usuario) {
+      return res.send({ msg: "[ERRO]: Usuário não encontrado!" });
+    }
+
+    await usuario.deleteOne();
+
+    res.send("[SUCESSO]: Usuário removido com sucesso!");
+
+  } catch (erro) {
+    console.log(erro);
+    res.send({ msg: "[ERRO]: Erro ao remover usuário!" });
+  }
+}
